@@ -1,0 +1,4 @@
+9170923	2015-11-16T06:00:00Z	X Burlesque	Bugsys Cabaret at Flamingo Las Vegas	Nevada Las Vegas|689	89109
+snapshot_11_16_2015_0_0.json	1447650000.0	0	0	0
+snapshot_11_17_2015_0_0.json	1447736400.0	0	0	0
+snapshot_11_18_2015_0_0.json	1447822800.0	0	0	0
