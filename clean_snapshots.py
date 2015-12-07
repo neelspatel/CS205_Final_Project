@@ -5,9 +5,12 @@ import datetime
 import pytz
 
 from dateutil.relativedelta import relativedelta
+from assign_region import get_region_from_zip
 
 SNAPSHOT_DIR = 'snapshots_by_event'
 SNAPSHOT_DIR = 'sample_snapshots'
+
+NUM_REGIONS = 9
 #converts the snapshot to a time
 def snapshot_name_to_time(snapshot):
 	snapshot_time = datetime.datetime.strptime(snapshot, "snapshot_%m_%d_%Y_%H_%M.json")
@@ -58,6 +61,71 @@ def generate_snapshots_between(first, last):
 		current_date += datetime.timedelta(days=1)
     # returns snapshot names
 	return dates	
+
+def dummy_variable(length, i):
+    # return dummy variable with 1 at i
+    var = [0] * length
+    var[i] = 1
+    return var
+
+# need to allow different lags when we print out the data for regression
+def construct_regression(event_time_series, lag=5, outfile=None):
+    """
+    Event time_series is a list of tuples of (evemt, time_series)
+    lag is lookback in regression model 
+    """
+    regression_lines = [] 
+    # we want to compute a row of the regression matrix 
+    for event, ts in event_time_series:
+        # event logic to add in regression coefficients, dummy variables
+        # need to figure out region 
+        # get zipcode  and figure out dummy regions
+        try: 
+            d_index = get_region_from_zip(event[-1])
+        except:
+            d_index = -1
+        event_regressors = dummy_variable(NUM_REGIONS+1, d_index)
+        event_date = datetime.datetime.strptime(event[1][:-1], "%Y-%m-%dT%H:%M:%S")
+        # iterate through the time series from lag up
+        for i in range(lag, len(ts)):
+            # look back lag in ts to get regressorrs
+            prev_prices =  [e[2] for e in ts[i-lag:i]]
+            cur_price = ts[i][2]
+            # compute hours until
+            cur_date = datetime.date.fromtimestamp(float(ts[i][0]))
+            hrs_to_event = relativedelta(event_date, cur_date).hours
+            tix_left = ts[i][3]
+            assert(hrs_to_event >= 0)
+            assert(tix_left >= 0)
+            # dependent variable (current price) goes first
+            # append a 1 for the constant term 
+            cur_line = [cur_price, 1, hrs_to_event, tix_left] + event_regressors + prev_prices
+            regression_lines.append(" ".join(map(str, cur_line)))
+    if outfile:
+        with open(outfile, "w+") as mat_file:
+            for line in regression_lines:
+                mat_file.write(line+'\n')
+    return regression_lines 
+
+# time_series format tstamp, max_price, min_price, tix_left
+def clean_timeseries(time_series):
+    # propogate previous values of max price and stuff
+    time_series = map(list, time_series)
+    last_max_price = 0.0
+    last_tix_left = 0
+    for i in range(len(time_series)):
+        time_series[i] = list(time_series[1])
+        if time_series[i][1] == 0.0:
+            # replace with last_price
+            time_series[i][1] = last_max_price
+        else:
+            last_max_price = time_series[i][1] 
+
+        if time_series[i][3] == None:
+            time_series[i][3] = last_tix_left
+        else:
+            last_tix_left = time_series[i][3] 
+    return time_series
 
 def main():
     snapshots = os.listdir(SNAPSHOT_DIR)
@@ -150,55 +218,10 @@ def main():
             print ts
 
     # print out good time series: tuples of min price and tix left
-    formatted_input = [(ts[0], ts[1:]) for ts in good_time_series]
-    print construct_regression(formatted_input) 
-    return None
-
-    for event, ts in formatted_input:
-        if len(ts) > 8:
-            print event
-            print ts 
-
-    for ts in good_time_series:
-        # where is the metadata for the event
-        if len(ts) > 8:
-            print [(t[0], t[2], t[3]) for t in ts]
-    
+    formatted_input = [(ts[0], clean_timeseries(ts[1:])) for ts in good_time_series]
     print good_ts, " / ", len(time_series)
+    regression_lines =  construct_regression(formatted_input, lag=1, outfile="matrix.txt") 
 
-def dummy_variable(length, i):
-    # return dummy variable with 1 at i
-    var = [0] * length
-    var[i] = 1
-    return var
-
-# need to allow different lags when we print out the data for regression
-def construct_regression(event_time_series, lag=5):
-    """
-    Event time_series is a list of tuples of (evemt, time_series)
-    lag is lookback in regression model 
-    """
-    regression_lines = [] 
-    # we want to compute a row of the regression matrix 
-    for event, ts in event_time_series:
-        # event logic to add in regression coefficients, dummy variables
-        # need to figure out region 
-        event_regressors = []
-        event_date = datetime.datetime.strptime(event[1][:-1], "%Y-%m-%dT%H:%M:%S")
-        # iterate through the time series from lag up
-        for i in range(lag, len(ts)):
-            # look back lag in ts to get regressorrs
-            prev_prices =  [e[2] for e in ts[i-lag:i]]
-            cur_price = ts[i][2]
-            # compute hours until
-            cur_date = datetime.date.fromtimestamp(float(ts[i][0]))
-            hrs_to_event = relativedelta(event_date, cur_date).hours
-            assert(hrs_to_event >= 0)
-            # dependent variable (current price) goes first
-            # append a 1 for the constant term 
-            cur_line = [cur_price, 1, hrs_to_event] + event_regressors + prev_prices
-            regression_lines.append(" ".join(map(str, cur_line)))
-    return regression_lines 
 
 if __name__ == '__main__':
     main()
