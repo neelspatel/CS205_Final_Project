@@ -38,6 +38,8 @@ values = []
 for row in data.collect():
 	values.append(map(float, row.split(" ")[1:]))
 
+print x_t_x
+
 betas = cholesky_solution_linear_regression(x_t_x, x_t_y)
 
 print betas

@@ -28,7 +28,7 @@ def get_region_mapping():
 
 			row_num += 1
 
-	mapping[None] = "unknown"
+	mapping[None] = -1
 
 	return mapping
 
@@ -39,5 +39,3 @@ def get_region_from_zip(zip_code, mapping=None):
 	zip_code_object = zipcode.isequal(zip_code)
 
 	return mapping[zip_code_object.state]
-
-
