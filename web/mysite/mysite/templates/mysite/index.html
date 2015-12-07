@@ -1,0 +1,98 @@
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/flatly/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			//to allow CSRF requests
+			$.ajaxSetup({
+				data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+			});	
+
+			$.ajaxSetup({
+			    beforeSend: function(xhr, settings) {
+			        xhr.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+			    }
+			});
+
+			$("#getData").on("click", function(e){
+
+				//clear the data
+				$("#results").html("");				
+
+				$("#loadingIndicator").removeClass("hide");
+
+				var params = {};
+				params["rows"] = $("#rows").val();
+				params["columns"] = $("#columns").val();
+
+				$.ajax({
+					type: "POST",
+					url: "/get_data/",
+					data: params,
+					cache: false,
+					complete: function( response ) {			
+						console.log(response);		
+						$("#results").html(response['responseText']);	
+					}
+				}).done(function() {
+					console.log( "success" );
+				})
+				.fail(function() {
+					console.log( "error" );
+				})
+				.always(function() {
+					console.log( "complete" );
+					$("#loadingIndicator").addClass("hide");
+				});
+
+				e.preventDefault();
+			})
+		})
+	</script>
+</head>
+<body>
+	<div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">            
+            <li role="presentation"><a href="#">About</a></li>            
+          </ul>
+        </nav>
+        <h3 class="text-muted">Dynamic Ticket Prediction</h3>
+      </div>
+
+      <div class="jumbotron">        
+        <form class="form-inline row" id="parameters">
+		  <div class="form-group col-xs-4">
+		    <label for="rows">Rows</label>
+		    <input type="number" class="form-control" id="rows" value="10000">
+		  </div>
+		  <div class="form-group col-xs-4">
+		    <label for="rows">Columns</label>
+		    <input type="number" class="form-control" id="columns" value="25">
+		  </div>
+		  <div class="form-group col-xs-2">
+		    <button class="btn btn-default btn-success" id="getData">Get Data</button>
+		  </div>	
+		  <div class="form-group col-xs-2">
+		  	<i class="fa fa-refresh fa-spin hide fa-2x" id="loadingIndicator"></i>
+		  </div>		  		  
+		</form>
+      </div>     
+
+      <div id="results">
+      </div>
+
+      
+
+      <footer class="footer">
+        <p>CS205, Fall 2015</p>
+      </footer>
+
+    </div> <!-- /container -->
+</body>
+</html>

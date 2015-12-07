@@ -1,6 +1,7 @@
 import gen_random
 import linreg
 import numpy as np
+import time
 
 def split_file(input_file, output_file1, output_file2):
 	with open(input_file, "r+") as input_data:
@@ -17,6 +18,7 @@ def split_file(input_file, output_file1, output_file2):
 
 def get_recommended_buys(input_file, coefs):
 	predict_buy = []
+	predict_sell = []
 	with open(input_file, "r+") as input_data:
 		for row in input_data:
 			row_values = row.split(" ")
@@ -26,17 +28,22 @@ def get_recommended_buys(input_file, coefs):
 			predicted_value = np.dot(features, coefs)
 
 			if predicted_value > value:
-				predict_buy.append(row)				
+				predict_buy.append(row)
+			elif predicted_value < value:
+				predict_sell.append(row)					
 
-	return predict_buy
+	return predict_buy, predict_sell
 
-#create a random matrix in the file
-gen_random.gen_random_array(100000, 25, "matrix.txt")
+def test():
+	#create a random matrix in the file
+	gen_random.gen_random_array(1000000, 25, "matrix.txt")
 
-#splits the matrix into training and test data
-split_file("matrix.txt", "matrix_train.txt", "matrix_test.txt")
+	#splits the matrix into training and test data
+	split_file("matrix.txt", "matrix_train.txt", "matrix_test.txt")
 
-coefs = linreg.get_coefficients("matrix_train.txt")
+	start = time.time()
+	coefs = linreg.get_coefficients("matrix_train.txt")
 
-#tests the coefs
-predict_buy = get_recommended_buys("matrix_test.txt", coefs)
+	#tests the coefs
+	predict_buy, predict_sell = get_recommended_buys("matrix_test.txt", coefs)
+	print time.time() - start

@@ -1,0 +1,41 @@
+<div class="alert alert-info" role="alert">
+	This query took {{time|floatformat}} seconds to execute.
+</div>
+
+
+<div class="row">
+	<div class="col-xs-6">
+		<h2>Buy Recommendations</h2>
+
+		{%for event in buy_events%}
+			<div class="panel panel-success">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">{{event.2}}</h3>
+			  </div>
+			  <div class="panel-body">
+			    <p><b>{{event.3}}</p>
+			    <p><b>{{event.4}}</p>
+			    <p><b>{{event.5}}</p>
+			    <p><b>{{event.1}}</p>
+			  </div>
+			</div>
+		{%endfor%}
+	</div>
+	<div class="col-xs-6">
+		<h2>Sell Recommendations</h2>
+
+		{%for event in sell_events%}
+			<div class="panel panel-danger">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">{{event.2}}</h3>
+			  </div>
+			  <div class="panel-body">
+			    <p><b>{{event.3}}</p>
+			    <p><b>{{event.4}}</p>
+			    <p><b>{{event.5}}</p>
+			    <p><b>{{event.1}}</p>
+			  </div>
+			</div>
+		{%endfor%}
+	</div>
+</div>
