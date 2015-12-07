@@ -15,6 +15,7 @@ def get_region_mapping():
 	with open('regions.txt', "r+") as inputfile:
 		reader = csv.reader(inputfile)
 
+		row_num = 0
 		for row in reader:
 			region = row[0]
 			states = row[1:]			
@@ -22,8 +23,10 @@ def get_region_mapping():
 			state_abbreviations = [get_abbr(x) for x in states]
 
 			for abbreviation, state in zip(state_abbreviations, states):
-				mapping[state] = region
-				mapping[abbreviation] = region
+				mapping[state] = row_num
+				mapping[abbreviation] = row_num
+
+			row_num += 1
 
 	mapping[None] = "unknown"
 
