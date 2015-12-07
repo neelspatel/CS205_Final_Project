@@ -10,4 +10,4 @@ def gen_random_array(rows, columns, filename):
 			row = " ".join(map(str, data))
 			outputfile.write(row + "\n")
 
-gen_random_array(10000, 5, "matrix.txt")
+#gen_random_array(100000, 20, "matrix.txt")

@@ -13,8 +13,6 @@ def cholesky_solution_linear_regression(x_t_x,x_t_y):
     theta = np.linalg.solve(np.transpose(L),z)
     return theta
 
-data = sc.textFile("matrix.txt")
-
 #convert the data into (x, y, count) tuples
 def process_row(row):
 	row_values = row.split(" ")
@@ -24,22 +22,23 @@ def process_row(row):
 	yield "y", value * features 
 	yield "count", 1
 
-
-processed_data = data.flatMap(process_row)
-
 def reduce_rows(row1, row2):
 	return row1 + row2
 
-result_rdd = processed_data.reduceByKey(reduce_rows)
-x_t_x =  result_rdd.lookup("x")[0]
-x_t_y = result_rdd.lookup("y")[0]
+def get_coefficients(file_name="matrix.txt"):
 
-values = []
-for row in data.collect():
-	values.append(map(float, row.split(" ")[1:]))
+	data = sc.textFile(file_name)
 
-print x_t_x
+	processed_data = data.flatMap(process_row)
 
-betas = cholesky_solution_linear_regression(x_t_x, x_t_y)
+	result_rdd = processed_data.reduceByKey(reduce_rows)
+	x_t_x =  result_rdd.lookup("x")[0]
+	x_t_y = result_rdd.lookup("y")[0]
 
-print betas
+	values = []
+	for row in data.collect():
+		values.append(map(float, row.split(" ")[1:]))
+
+	betas = cholesky_solution_linear_regression(x_t_x, x_t_y)
+
+	return betas

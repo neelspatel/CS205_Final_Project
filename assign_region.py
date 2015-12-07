@@ -2,7 +2,6 @@ import csv
 import us
 import zipcode
 
-
 def get_abbr(state):
 	lookup_value = us.states.lookup(unicode(state))
 	if lookup_value:
