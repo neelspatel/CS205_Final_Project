@@ -193,11 +193,11 @@ def construct_regression(event_time_series, lag=5):
             # compute hours until
             cur_date = datetime.date.fromtimestamp(float(ts[i][0]))
             hrs_to_event = relativedelta(event_date, cur_date).hours
-            assert(hrs_to_event > 0)
+            assert(hrs_to_event >= 0)
             # dependent variable (current price) goes first
             # append a 1 for the constant term 
             cur_line = [cur_price, 1, hrs_to_event] + event_regressors + prev_prices
-            regression_lines.append("\t".join(map(str, cur_line)))
+            regression_lines.append(" ".join(map(str, cur_line)))
     return regression_lines 
 
 if __name__ == '__main__':
