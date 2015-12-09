@@ -1,5 +1,5 @@
 import cython
-from cython.parallel import prange
+from cython.parallel import prange, parallel
 from libc.math cimport sqrt
 
 import numpy as np
@@ -13,11 +13,13 @@ cpdef f_cholesky(np.float64_t[:, :] mat, int num_threads):
 @cython.wraparound(False)
 cpdef cholesky(np.float64_t[:, :] mat, int num_threads):
     cdef: 
-        int i, j, k
+        int i, j, k, l
+        int ix, jx
         int rows, cols
     rows = mat.shape[0]
     cols = mat.shape[1]
     with nogil:
+        # can't parallelize outer loop
         for i in xrange(rows):
             mat[i,i] = sqrt(mat[i, i])
             # each iteration updates/writes to same part of matrix 
@@ -25,11 +27,11 @@ cpdef cholesky(np.float64_t[:, :] mat, int num_threads):
                 mat[i, j] = mat[i, j] / mat[i, i]
 
             # will never update before reading 
-            for k in prange(i+1, rows, num_threads=num_threads):
-                for j in xrange(k, rows):
-                    mat[k, j] = mat[k, j] - (mat[i, k] * mat[i, j])
+            for k in prange(i+1, rows, num_threads=num_threads, schedule='static'):
+                for l in xrange(k, rows):
+                    mat[k, l] = mat[k, l] - (mat[i, k] * mat[i, l])
+
         # zero out lower part of matrix  
-        #for i in prange(rows, num_threads=num_threads):
-        for i in prange(rows, num_threads=num_threads):
-            for j in xrange(i):
-                mat[i, j] = 0.0
+        for ix in prange(rows, num_threads=num_threads, schedule='static'):
+            for jx in xrange(ix):
+                mat[ix, jx] = 0.0

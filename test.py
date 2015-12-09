@@ -32,7 +32,7 @@ def test_cholesky(size, n_threads):
     print "Theirs took: ", time.time() - start
     assert(np.allclose(x_t_x.T, real_ch_x))
 
-size = 5000
+size = 1000
 num_threads = 3
 print "1 thread"
 test_cholesky(size, 1) 
