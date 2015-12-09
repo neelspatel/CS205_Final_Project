@@ -220,7 +220,7 @@ def main():
     # print out good time series: tuples of min price and tix left
     formatted_input = [(ts[0], clean_timeseries(ts[1:])) for ts in good_time_series]
     print good_ts, " / ", len(time_series)
-    regression_lines =  construct_regression(formatted_input, lag=1, outfile="matrix.txt") 
+    regression_lines = construct_regression(formatted_input, lag=1, outfile="matrix.txt") 
 
 
 if __name__ == '__main__':
