@@ -56,12 +56,9 @@ def get_events_from_simulation(rows, event_list):
 
 		#gets the metadata for the current event
 		row['metadata'] = get_event(cur_event)
-
-		#formats the date and time
-		cur_time = row['metadata']['last_chance']
-		parsed_time = datetime.datetime.strptime(cur_time, "%Y-%m-%dT%XZ")
-		formatted_time = parsed_time.strftime("%a %B %-m %Y, %-I:%M %p")
-		row['metadata']['time'] = formatted_time
+		
+		if row['metadata']['price'] != 0:
+			row['change'] = row['metadata']['price'] * row['change']
 
 	return rows
 
@@ -72,4 +69,20 @@ def get_event(event_name):
 	with open(event_name, "r+") as inputfile:
 		metadata_values = inputfile.next().split("\t")
 		
-		return {metadata[i]: metadata_values[i] for i in range(len(metadata))}
+		cur_event = {metadata[i]: metadata_values[i] for i in range(len(metadata))}
+
+		#formats the date and time
+		cur_time = cur_event['last_chance']
+		parsed_time = datetime.datetime.strptime(cur_time, "%Y-%m-%dT%XZ")
+		formatted_time = parsed_time.strftime("%a %B %-m %Y, %-I:%M %p")
+		cur_event['time'] = formatted_time
+
+		event_data_row = inputfile.next().split("\t")
+		price = event_data_row[2]
+		cur_event["price"] = float(price)
+
+		cur_event['time'] = formatted_time
+
+		return cur_event
+
+		
