@@ -1,5 +1,5 @@
 import os
-os.environ.get("SPARK_HOME", "~/spark")
+os.environ.set("SPARK_HOME", "~/spark")
 
 # Django settings for mysite project.
 
