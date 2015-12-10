@@ -1,5 +1,4 @@
 import gen_random
-from linreg import get_coefficients
 import numpy as np
 import time
 
@@ -33,17 +32,3 @@ def get_recommended_buys(input_file, coefs):
 				predict_sell.append(row)					
 
 	return predict_buy, predict_sell
-
-def test():
-	#create a random matrix in the file
-	gen_random.gen_random_array(1000000, 25, "matrix.txt")
-
-	#splits the matrix into training and test data
-	split_file("matrix.txt", "matrix_train.txt", "matrix_test.txt")
-
-	start = time.time()
-	coefs = get_coefficients("matrix_train.txt")
-
-	#tests the coefs
-	predict_buy, predict_sell = get_recommended_buys("matrix_test.txt", coefs)
-	print time.time() - start
