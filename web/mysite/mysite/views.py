@@ -30,22 +30,21 @@ def cholesky_solution_linear_regression(x_t_x,x_t_y):
     theta = np.linalg.solve(np.transpose(L),z)
     return theta
 
-#convert the data into (x, y, count) tuples
-def process_row(row):
-	row_values = row.split(" ")
-	value = float(row_values[0])
-	features = np.array(row_values[1:] + [1], dtype='float64')
-	yield "x", np.outer(features, features)
-	yield "y", value * features 
-	yield "count", 1
-
-def reduce_rows(row1, row2):
-	return row1 + row2
-
 def get_coefficients(file_name="/home/ubuntu/CS205_Final_Project/web/mysitematrix.txt"):
 
 	data = sc.textFile(file_name)
 
+	#convert the data into (x, y, count) tuples
+	def process_row(row):
+		row_values = row.split(" ")
+		value = float(row_values[0])
+		features = np.array(row_values[1:] + [1], dtype='float64')
+		yield "x", np.outer(features, features)
+		yield "y", value * features 
+		yield "count", 1
+
+	def reduce_rows(row1, row2):
+		return row1 + row2
 	
 	processed_data = data.flatMap(process_row)
 
