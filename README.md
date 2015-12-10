@@ -1,5 +1,6 @@
 # Parallel Ticket Price Prediction
 This code parallelizes linear regression using Spark and OMP/Cython to predict ticket prices. 
+Check out a full description and interactive simulation at our [project website](http://52.22.40.64)!
 
 ## Setup
 Our code is written in Python 2.7 and depends on the following modules:
