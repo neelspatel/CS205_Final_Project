@@ -4,7 +4,7 @@ findspark.init("/home/ubuntu/spark")
 #findspark.init()
 
 import pyspark
-sc = pyspark.SparkContext(appName="final", pyfiles=["/home/ubuntu/CS205_Final_Project/web/mysite"])
+sc = pyspark.SparkContext(appName="final", pyFiles=["/home/ubuntu/CS205_Final_Project/web/mysite"])
 #sc.setLogLevel('ERROR')
 
 import numpy as np
