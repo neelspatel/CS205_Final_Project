@@ -12,16 +12,15 @@ import sys
 import findspark
 
 #options for server
-findspark.init("/home/ubuntu/spark")
-home_dir = "/home/ubuntu/CS205_Final_Project/web/mysite/"
+#findspark.init("/home/ubuntu/spark")
+#home_dir = "/home/ubuntu/CS205_Final_Project/web/mysite/"
 
 #options for local
-#home_dir = ""
-#findspark.init()
+home_dir = ""
+findspark.init()
 
 import pyspark
 sc = pyspark.SparkContext(appName="final")
-sc.addPyFile("/home/ubuntu/CS205_Final_Project/web/mysite/mysite/views.py")
 
 # from GitHub
 def cholesky_solution_linear_regression(x_t_x,x_t_y):    
@@ -31,21 +30,27 @@ def cholesky_solution_linear_regression(x_t_x,x_t_y):
     return theta
 
 def get_coefficients(file_name="/home/ubuntu/CS205_Final_Project/web/mysitematrix.txt"):
-
+	#uses Spark to load the text file
 	data = sc.textFile(file_name)
 
 	#convert the data into (x, y, count) tuples
-	def process_row(row):
+	def process_row(row):		
+		#the row is of the format: y x1 x2 x3 ...
 		row_values = row.split(" ")
 		value = float(row_values[0])
+
+		#we append a [1] to serve as a blank variable expressing the intercept
 		features = np.array(row_values[1:] + [1], dtype='float64')
+
 		yield "x", np.outer(features, features)
 		yield "y", value * features 
 		yield "count", 1
 
+	#reduces by combining rows
 	def reduce_rows(row1, row2):
 		return row1 + row2
 	
+	#processes each row into x and y groups
 	processed_data = data.flatMap(process_row)
 
 	result_rdd = processed_data.reduceByKey(reduce_rows)
@@ -80,14 +85,26 @@ def get_data(request):
 
 	#tests the coefs
 	predict_buy, predict_sell = test_regression.get_recommended_buys(home_dir + "matrix_test.txt", coefs)
-	predict_buy_events = []
-	predict_sell_events = []
-
-
 	elapsed = time.time() - start
+
+	#gets the top buys and sells	
+	top_buys = sorted(predict_buy, key=lambda x: x["change"], reverse=True)[:50]
+	top_sells = sorted(predict_buy, key=lambda x: x["change"])[:50]
+
+	#gets the (simulated) event names for the buys and sells
+	event_names = os.listdir(home_dir + "../../snapshots_by_event")
+	event_names = [home_dir + "../../snapshots_by_event/" + x for x in event_names if x[-4:]==".txt"]
+
+	top_buys = test_regression.get_events_from_simulation(top_buys, event_names)
+	top_sells = test_regression.get_events_from_simulation(top_sells, event_names)
 
 	response = {}
 	response['time'] = elapsed
+
+	response["buy_events"] = top_buys
+	response["sell_events"] = top_sells
+
+
 
 	'''
 	#read random data for each of the rows	

@@ -1,0 +1,7 @@
+9174717	2015-11-14T21:30:00Z	Mississippi State Bulldogs	Davis Wade Stadium	Mississippi Jackson|5543	39759
+snapshot_11_17_2015_0_0.json	1447736400.0	0	0	0
+snapshot_12_3_2015_0_0.json	1449118800.0	0	0	0
+snapshot_12_3_2015_12_0.json	1449162000.0	0	0	0
+snapshot_12_4_2015_0_0.json	1449205200.0	0	0	0
+snapshot_12_4_2015_12_0.json	1449248400.0	0	0	0
+snapshot_12_4_2015_6_0.json	1449226800.0	0	0	0

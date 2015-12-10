@@ -1,0 +1,3 @@
+9163029	2015-11-15T20:00:00Z	Wiesenthal	Acorn Theatre	New York New York Metro|664	10036
+snapshot_11_16_2015_0_0.json	1447650000.0	0	0	0
+snapshot_11_17_2015_0_0.json	1447736400.0	0	0	0

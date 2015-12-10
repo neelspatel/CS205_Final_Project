@@ -3,6 +3,11 @@
 </div>
 
 
+<div class="well">
+	These results were calculated over simulated data, to allow for experiments with different numbers of rows and columns. To get these results, we trained a model over this sample data, and then identified the rows (time points) where our model predicted a different price than was currently listed. We mapped these simulated rows to real events for demonstration.
+</div>
+
+
 <div class="row">
 	<div class="col-xs-6">
 		<h2>Buy Recommendations</h2>
@@ -10,13 +15,13 @@
 		{%for event in buy_events%}
 			<div class="panel panel-success">
 			  <div class="panel-heading">
-			    <h3 class="panel-title">{{event.2}}</h3>
+			    <h3 class="panel-title">{{event.metadata.act_primary}}</h3>
 			  </div>
 			  <div class="panel-body">
-			    <p><b>{{event.3}}</p>
-			    <p><b>{{event.4}}</p>
-			    <p><b>{{event.5}}</p>
-			    <p><b>{{event.1}}</p>
+			  	<p><b>{{event.metadata.time}}</b></p>
+			    <p>Event {{event.row_index}}</p>			    
+			    <p>Venue: {{event.metadata.venue_name}}</p>
+			    <p>Location: {{event.metadata.eventLocation_facet_str}}, {{event.metadata.zip}}</p>
 			  </div>
 			</div>
 		{%endfor%}
@@ -27,13 +32,13 @@
 		{%for event in sell_events%}
 			<div class="panel panel-danger">
 			  <div class="panel-heading">
-			    <h3 class="panel-title">{{event.2}}</h3>
+			    <h3 class="panel-title">{{event.metadata.act_primary}}</h3>
 			  </div>
 			  <div class="panel-body">
-			    <p><b>{{event.3}}</p>
-			    <p><b>{{event.4}}</p>
-			    <p><b>{{event.5}}</p>
-			    <p><b>{{event.1}}</p>
+			  	<p><b>{{event.metadata.time}}</b></p>
+			    <p>Event {{event.row_index}}</p>			    
+			    <p>Venue: {{event.metadata.venue_name}}</p>
+			    <p>Location: {{event.metadata.eventLocation_facet_str}}, {{event.metadata.zip}}</p>
 			  </div>
 			</div>
 		{%endfor%}

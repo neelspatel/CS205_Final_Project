@@ -1,9 +1,12 @@
 <html>
 <head>
+	{%load staticfiles%}
+
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/flatly/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
+	
 	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
 
 	<script>
 		$(document).ready(function() {
@@ -65,15 +68,20 @@
         <h3 class="text-muted">Dynamic Ticket Prediction</h3>
       </div>
 
-      <div class="jumbotron">        
+      <div class="jumbotron" style="padding-top: 15px; padding-bottom: 5px; text-align: center !important">        
         <form class="form-inline row" id="parameters">
-		  <div class="form-group col-xs-4">
-		    <label for="rows">Rows</label>
-		    <input type="number" class="form-control" id="rows" value="10000">
+		  <div class="form-group col-xs-4">		    
+		  	<div class="input-group">
+		    	<input type="number" class="form-control" id="rows" value="10000">
+		    	<span class="input-group-addon"> rows</span>
+		    </div>
 		  </div>
-		  <div class="form-group col-xs-4">
-		    <label for="rows">Columns</label>
-		    <input type="number" class="form-control" id="columns" value="25">
+
+		  <div class="form-group col-xs-4">		    
+		  	<div class="input-group">
+		    	<input type="number" class="form-control" id="columns" value="25">
+		    	<span class="input-group-addon"> columns</span>
+		    </div>
 		  </div>
 		  <div class="form-group col-xs-2">
 		    <button class="btn btn-default btn-success" id="getData">Get Data</button>

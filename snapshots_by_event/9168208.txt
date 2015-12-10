@@ -1,0 +1,4 @@
+9168208	2015-10-28T00:30:00Z	Taylor Swift	American Airlines Arena	Florida Miami / S. Florida|669	33132
+snapshot_11_24_2015_0_0.json	1448341200.0	0	0	0
+snapshot_11_24_2015_0_0.json	1448341200.0	0	0	0
+snapshot_11_24_2015_12_0.json	1448384400.0	0	0	0

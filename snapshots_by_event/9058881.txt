@@ -1,0 +1,4 @@
+9058881	2015-11-04T00:30:00Z	Susan Boyle	Broward Center for the Performing Arts - Au Rene Theater	Florida Miami / S. Florida|669	33312
+snapshot_11_27_2015_18_0.json	1448665200.0	0	0	0
+snapshot_11_29_2015_12_0.json	1448816400.0	0	0	0
+snapshot_11_30_2015_0_0.json	1448859600.0	0	0	0
