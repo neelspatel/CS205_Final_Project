@@ -1,7 +1,7 @@
 import findspark
 
-#findspark.init("/home/ubuntu/spark")
-findspark.init()
+findspark.init("/home/ubuntu/spark")
+#findspark.init()
 
 import pyspark
 sc = pyspark.SparkContext(appName="final")

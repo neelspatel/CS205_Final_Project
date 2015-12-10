@@ -9,8 +9,8 @@ import numpy as np
 import os
 import datetime
 
-#home_dir = "/home/ubuntu/CS205_Final_Project/web/mysite/"
-home_dir = ""
+home_dir = "/home/ubuntu/CS205_Final_Project/web/mysite/"
+#home_dir = ""
 
 sys.path.append('/home/ubuntu/CS205_Final_Project/web/mysite')
 
