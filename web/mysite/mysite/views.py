@@ -68,7 +68,7 @@ def get_coefficients(file_name="/home/ubuntu/CS205_Final_Project/web/mysitematri
 	
 
 def home(request):	
-	return render(request, "mysite/index.html")
+	return render(request, "mysite/overview.html")
 
 def get_data(request):
 	rows = int(request.POST.get("rows"))
@@ -97,6 +97,10 @@ def get_data(request):
 
 	top_buys = test_regression.get_events_from_simulation(top_buys, event_names)
 	top_sells = test_regression.get_events_from_simulation(top_sells, event_names)
+
+	#resorts (as prices may have been updated with true ticket prices)
+	top_buys = sorted(top_buys, key=lambda x: x["change"], reverse=True)
+	top_sells = sorted(top_sells, key=lambda x: x["change"], reverse=True)
 
 	response = {}
 	response['time'] = elapsed
