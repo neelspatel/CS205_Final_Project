@@ -147,7 +147,7 @@
 
         <p>We compute the Cholesky decomposition of $A^T A$, which is of the form $A = R^T R = L L^T$ where $R = L^T$ and $R$ is upper triangular and $L$ is lower triangular. We solve the following equations first for $z$ and then $\beta$:
         \begin{align*}
-        Lz &= X^T \mathbf{y} \\
+        Lz &= A^T \mathbf{y} \\
         L^T \beta &= z
         \end{align*}
         The output $\beta$ are the regression coefficients.</p>
