@@ -1,5 +1,5 @@
 import gen_random
-import linreg
+from linreg import get_coefficients
 import numpy as np
 import time
 
@@ -42,7 +42,7 @@ def test():
 	split_file("matrix.txt", "matrix_train.txt", "matrix_test.txt")
 
 	start = time.time()
-	coefs = linreg.get_coefficients("matrix_train.txt")
+	coefs = get_coefficients("matrix_train.txt")
 
 	#tests the coefs
 	predict_buy, predict_sell = get_recommended_buys("matrix_test.txt", coefs)
