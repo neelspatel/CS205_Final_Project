@@ -1,5 +1,5 @@
 import findspark
-findspark.init()
+findspark.init("~/spark/bin")
 import pyspark
 sc = pyspark.SparkContext(appName="final")
 sc.setLogLevel('ERROR')
