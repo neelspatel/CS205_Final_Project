@@ -1,14 +1,6 @@
 import os
 import sys
 
-sys.path.append('/home/ubuntu/CS205_Final_Project/web/mysite/mysite')
-
-# The following is for specifying a Python version for PySpark. Here we
-# use the currently calling Python version.
-# This is handy for when we are using a virtualenv, for example, because
-# otherwise Spark would choose the default system Python version.
-os.environ['PYSPARK_PYTHON'] = sys.executable
-
 # Django settings for mysite project.
 
 DEBUG = True
