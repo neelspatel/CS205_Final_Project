@@ -50,10 +50,11 @@ def get_coefficients(file_name="/home/ubuntu/CS205_Final_Project/web/mysitematri
 	processed_data = data.flatMap(process_row)
 
 	result_rdd = processed_data.reduceByKey(reduce_rows)
-	
-	'''
+
 	x_t_x =  result_rdd.lookup("x")[0]
 	x_t_y = result_rdd.lookup("y")[0]
+
+	'''
 
 	values = []
 	for row in data.collect():
