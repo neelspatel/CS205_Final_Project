@@ -7,6 +7,8 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+SPARK_HOME = '~/spark'
+
 MANAGERS = ADMINS
 
 DATABASES = {
