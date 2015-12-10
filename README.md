@@ -17,7 +17,7 @@ Our code is broken up into a few categories:
 * Data processing
     * *process_snapshots.py*  - Transforms data from many snapshot json files to many event time-series files.
     * *clean_snapshots.py* - Iterates over event files and cleans data further. Re-orders any rows out of order, interpolates any missing data, looks up region of the event using *assign_region.py*.
-    * *assign_region.py* - Used by *clean_snapshots.py* to look up the region of an event based on its zip code.
+    * *assign_region.py* - Used by *clean_snapshots.py* to look up the region of an event based on its zip code. We split the US up into 9 regions, which can be found in *regions.txt*.
     * *sample_snapshots/* - Example data. Each text file is a unique event on StubHub, and contains data on the location of the event, the headlining performer, and the min and max prices, and the number of tickets available for each snapshot.
     * *gen_random.py* - Defines a utility function to create a random matrix and output to a file, with entries delimited by spaces and rows on their own line.
 * Parallel linear regression
