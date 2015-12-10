@@ -32,7 +32,7 @@ Our code is broken up into a few categories:
     * *web/* - Django site that we used to allow users to interactively train and run a model on simulated data using our parallel implementation of linear regression. Also includes our write-up.
 
 ## How to Run
-To run a linear regression on a random matrix:
+To run our linear regression implementation on a random matrix:
 ```
 import gen_random
 import linreg
