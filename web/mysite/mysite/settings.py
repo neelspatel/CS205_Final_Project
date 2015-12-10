@@ -1,3 +1,12 @@
+import os
+import sys
+
+# The following is for specifying a Python version for PySpark. Here we
+# use the currently calling Python version.
+# This is handy for when we are using a virtualenv, for example, because
+# otherwise Spark would choose the default system Python version.
+os.environ['PYSPARK_PYTHON'] = sys.executable
+
 # Django settings for mysite project.
 
 DEBUG = True
@@ -7,7 +16,7 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
-SPARK_HOME = '~/spark'
+SPARK_HOME = '/home/ubuntu/spark'
 
 MANAGERS = ADMINS
 
