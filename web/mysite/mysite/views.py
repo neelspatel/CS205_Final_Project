@@ -51,9 +51,7 @@ def get_coefficients(file_name="/home/ubuntu/CS205_Final_Project/web/mysitematri
 	result_rdd = processed_data.reduceByKey(reduce_rows)
 
 	x_t_x =  result_rdd.lookup("x")[0]
-	x_t_y = result_rdd.lookup("y")[0]
-
-	'''
+	x_t_y = result_rdd.lookup("y")[0]	
 
 	values = []
 	for row in data.collect():
@@ -62,8 +60,7 @@ def get_coefficients(file_name="/home/ubuntu/CS205_Final_Project/web/mysitematri
 	betas = cholesky_solution_linear_regression(x_t_x, x_t_y)
 
 	return betas
-	'''
-	return [0 for i in range(10)]
+	
 
 def home(request):	
 	return render(request, "mysite/index.html")
