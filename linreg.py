@@ -75,3 +75,5 @@ def parallel_get_coefficients(file_name="matrix.txt", num_threads=None):
         values.append(map(float, row.split(" ")[1:]))
     betas = cholesky_solution_linear_regression(x_t_x, x_t_y)
     return betas
+
+print parallel_get_coefficients()
