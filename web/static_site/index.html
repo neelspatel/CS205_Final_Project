@@ -26,11 +26,29 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$']]},
+          "HTML-CSS": { availableFonts: ["TeX"] },
+          Tex: {
+            Macros: {
+                    RR: '{\\bf R}',
+                    bold: ['{\\bf #1}',1]
+                },
+            }
+        });
+    </script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 </head>
 
+<!--<body data-spy="scroll" data-target="#navbar">-->
 <body>
 
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav id="navbar" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -47,7 +65,27 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-left">
                     <li>
-                        <a href="#about">About</a>
+                        <a href="#motivation">Motivation</a>
+                    </li>
+
+                    <li>
+                        <a href="#data">Data</a>
+                    </li>
+
+                    <li>
+                        <a href="#model">Model</a>
+                    </li>
+
+                    <li>
+                        <a href="#parallelization">Parallelization</a>
+                    </li>
+
+                    <li>
+                        <a href="#results">Results</a>
+                    </li>
+
+                    <li>
+                        <a href="#future_work">Future Work</a>
                     </li>
                     <li>
                         <a href="https://github.com/neelspatel/CS205_Final_Project"><i class="fa fa-github"></i> GitHub</a>
@@ -58,15 +96,157 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+    <div class="container">
+
+    <section id="motivation">
+            <h1>Motivation</h1>
+            <p>Initially, our goal was to study ticket price time series. The online secondary ticket market is increasing in popularity/volume compared to the primary market, and it is estimated that as much as 50% of the volume on these sites are driven by automated algorithms. These algorithms, similar to algorithmic trading (in financial instruments), need to predict future ticket prices given any data that they have that that they think is correlated with future ticket prices.</p>
+
+            <p>To predict future prices, we need to build a mathematical model that takes in data relevant to future prices and can compute a new prediction. The problem of given past data that we want to fit a mathematical function to is known as regression. The simplest, most used model is linear regression (which can trivially be extended to polynomial regression).</p>
+
+            <p>In the case of ticket prices, some of the relevant variables that may be predictive of future prices are:
+            <ul>
+                <li><strong>Location:</strong> larger cities may have different dynamics than smaller towns. Different regions of the country may have preferences for different types of events (e.g., country vs. rap concert).</li>
+                <li><strong>Past prices:</strong> the past few price points are probably very predictive of the next price.</li>
+                <li><strong>Hours until event start:</strong> tickets become useless after the event starts, so we would definitely expect this variable to be predictive.</li>
+            </ul>
+            </p>
+
+            <p>The crux of our problem, then, is efficiently training a linear regression model (that we expect to update in real time multiple times per day). Because we are dealing with large amounts of data (time series of every ticket on the secondary market), and we hope our model will be effective for much larger sets of training data, to efficiently manage/compute the model parallelization.</p>
+
+            <p>These approaches can clearly be applied to any time-series data (i.e., as long as we used proper predictive features, the model and its training will translate) . One characteristic of time series that makes them especially suited to the parallelism that we use is the potentially unbounded number of rows (we get a new row for each event/price snapshot). This means that, as the time increases, the number of rows of our data will grow immensely. After collecting ticket data at the same rate that we did, we would have approximately 1.5 million rows on which to train the model within a year. If we increased the number of data input sources this number could greatly increase. </p>
+
+            <p>Depending on the number of features that we use (it would not be unreasonable to consider 1000s), this is a large amount of data. Luckily, though, the number of features is fixed. As we describe in more detail below, the main step of linear regression involves operating on the sample covariance matrix, which is a square matrix with the same number of rows/columns as the number of features in the original data matrix. </p>
+    </section>
+
+    <section id="data">
+        <h1>Data</h1>
+        <p>We scraped data from StubHub a large secondary ticket market. StubHub has an API but has stringent rate-limits. We wanted to scrape all of StubHub’s events (~130k) four times a day, meaning our IP address would be banned fairly quickly. We were also running this scraping code on AWS/EC2, the public IP range of which is already banned from StubHub by default. To get around this problem, we used an IP proxy and StubHub's cookies from our own browser to make the scraper appear to be a regular user from a different IP each time. We were then able to scrape "snapshots" of all of the events on StubHub four times a day.</p>
+
+        <p>Each “snapshot” from StubHub has per-event data, including the number of tickets available, the minimum and maximum prices, the location of the event, the headlining performer, and more. Ultimately, we had many large snapshots (4 a day for nearly three weeks, each about 800 MB gzipped). In order to make the data compatible with our model, we had to transform it to per-event time series of prices, remove unused fields, and interpolate values if any were missing.</p>
+
+        <p>To make the regression code as flexible as possible (because we were also interested in other time series applications), we made the input data format very general. Our code takes in a space delimited text file that contains a matrix with the regressand in the first column and regressors in all subsequent columns.</p>
+    </section>
 
 
+    <section id="model">
+        <h1>Model</h1>
+        <p>We decided to build our model using linear regression. This is the simplest regression model, but that also makes it powerful on large data sets. Training a linear regression model uses deterministic matrix methods (multiplication, inversion, factorization) to compute regression coefficients, as opposed to iterative methods that are difficult to parallelize, like stochastic gradient descent. Perhaps most importantly, linear regression is widely used in real world for these types of modelling problems, making a parallel implementation more general-purpose and extendable. 
+        </p>
+
+        <p>In linear regression, we are given an input matrix $A \in \mathbb{R}^{n \times d}$. where each row of $A$ can be thought of as an observation of a feature vector. The variable that we want to predict, $\mathbf{y} \in \mathbb{R}$, contains a value for each row. The goal is to find the coefficient vector $\beta$ such that we minimize the following objective:
+        $$
+        \arg\min_{\beta} ||\mathbf{y} - A\beta ||^2 
+        $$
+        where we are taking $\ell_2$ norms, Simple linear algebra yields the following closed form solution for the optimal $\beta$
+        $$
+        \hat{\beta} = (A^T A)^{-1} A^T \mathbf{y}
+        $$
+        </p>
+        <p>However, matrix inversion is notoriously expensive and numerically unstable. Hence, most numerical linear algebra implementations use a two step procedure to calculate $\hat{\beta}$. First, one calculates a suitable factorization of $A^TA$ (the covariance matrix, which is positive definite by definition). Then, we solve two linear systems using this decomposition (which can be optimized because of the special structure of the factored matrix). It turns out that this sequence of steps is more efficient than the matrix products and inversion that we would have to compute by the above equation.</p>
+
+        <p>We compute the Cholesky decomposition of $A^T A$, which is of the form $A = R^T R = L L^T$ where $R = L^T$ and $R$ is upper triangular and $L$ is lower triangular. We solve the following equations first for $z$ and then $\beta$:
+        \begin{align*}
+        Lz &= A^T \mathbf{y} \\
+        L^T \beta &= z
+        \end{align*}
+        The output $\beta$ are the regression coefficients.</p>
+    </section>
+
+    <section id="parallelization">
+        <h1>Parallelization</h1>
+        <h2>Covariance Matrix</h2>
+        <p>One straightforward way of computing the covariance matrix (if we assume that $A$ has been de-meaned) is as follows:. 
+        \begin{align*}
+        cov(A) &= A^TA \\
+            &= \sum_{i = 1}^n A_i^T A_i 
+        \end{align*}
+        where $A_I$ refers to the $i$’th row of $A$.</p>
+        <p>Note that this sum of outer products looks parallelizable, since it does not matter what order the sum is computed in. If the original matrix is $n \times d$, the covariance matrix will be $d \times d$. In the case of linear regression, this means that the covariance matrix will be square, with dimension equal to the number of features (generally a constant, does not increase with data).</p>
+        <p>We chose to use the MapReduce framework to parallelize the computation of the covariance matrix. Initially, we map over lines of the data matrix (so each line is sent to a worker). The workers compute the outer product of each feature vector with itself. They are then all sent to a single reducer which computes their sum, returning the sample covariance matrix. This mechanism allows us to split up the largest part of our data (number of rows in the matrix) and send them to separate workers. The next section details performance on simulated large datasets.</p>
+
+        <h2>Cholesky-decomposition</h2>
+        <p>To efficiently compute the regression coefficients from the covariance matrix, we chose to compute a factorization of the matrix called the Cholesky decomposition. This can be fed into a linear equation solver, which can proceed much more efficiently because of the triangular structure of the Cholesky decomposition.</p>
+        <p>While the covariance matrix is generally much smaller than the data matrix, we thought this step could still achieve benefits from parallelization. Because we were working with matrices at a different scale, we thought that the proper choice of parallelization would be at the level of threads, using Cython to generate efficient C code performing the actual decomposition.</p>
+
+        <pre><code class="python">import cython
+from cython.parallel import prange, parallel
+from libc.math cimport sqrt
+
+import numpy as np
+cimport numpy as np
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cpdef cholesky(np.float64_t[:, :] mat, int num_threads):
+    cdef: 
+        int i, j, k, l
+        int ix, jx
+        int rows, cols
+    rows = mat.shape[0]
+    cols = mat.shape[1]
+    with nogil:
+        # can't parallelize outer loop
+        for i in xrange(rows):
+            mat[i,i] = sqrt(mat[i, i])
+
+            # each iteration updates/writes to same part of matrix 
+            for j in xrange(i+1, rows):
+                mat[i, j] = mat[i, j] / mat[i, i]
+
+            # will never update before reading 
+            for k in prange(i+1, rows, num_threads=num_threads, schedule='static'):
+                for l in xrange(k, rows):
+                    mat[k, l] = mat[k, l] - (mat[i, k] * mat[i, l])
+
+        # zero out lower part of matrix  
+        for ix in prange(rows, num_threads=num_threads, schedule='static'):
+            for jx in xrange(ix):
+                mat[ix, jx] = 0.0</code></pre>
+
+                <p>Examining the code, we see that the outer for loop is difficult to parallelize (since iterations depend on iterations made in previous iterations). Attempting fine grained locking on the entries of the matrix would incur a lot of overhead. However, the expensive inner for loop is completely parallelizable, since none of the updates can affect subsequent reads within the same loop. Hence, we can parallelize without locking. Our performance on simulated datasets is described in detail in the next section.</p>
+
+    </section>
+
+    <section id="results">
+        <h1>Performance Results</h1>
+        <h2>Cholesky Decomposition (OMP/Cython)</h2>
+        <img src="http://araftery.s3.amazonaws.com/cs205/cholesky.png" />
+        <p>We tested our parallel Cholesky decomposition on square matrices of sizes 1,000 to 10,000 for several different numbers of threads on an EC2 server with 36 cores. As can be seen on the graph above, we found that, especially for larger matrix sizes, parallelism drastically sped up the execution time. The trials with one thread by far took the longest. We saw roughly 2x speedups from 1 thread to 4 threads and from 4 threads to 8 threads, after which additional threads led only to modest gains. One possible explanation for this phenomenon is that the additional overhead introduced by 16 or 32 threads was ultimately not worth the gain in speed for a matrix of maximum size 10,000 x 10,000. One can see on the graph that the 16 and 32 thread trials ran in speeds nearly identical to 8 threads except for on the largest matrix. It is likely that, for much larger matrix sizes, the additional threads would lead to similar gains as seen from 1 to 4 and 4 to 8 threads here.</p>
+
+        <h2>Linear Regression (Spark)</h2>
+        <img src="http://araftery.s3.amazonaws.com/cs205/linear_regression.png" />
+        <p>We tested our Spark linear regression implementation on a 250,000 x 25 matrix (that is, a random dataset with 250,000 rows and 24 features) on different size EMR clusters and with several different number of partitions. We found that larger clusters performed the work faster, though the speedup was more noticeable from clusters of size 3 to size 5 than from 1 to 3 or 5 to 7. In general, we saw speedups when increasing the number of partitions only up to about 9 or 10, after which the runtime stayed fairly constant.</p>
+
+
+    </section>
+
+
+    <section id="future_work">
+        <h1>Future Work</h1>
+        <p>Our linear regression model did not perform well on the data that we scraped from StubHub. Most of this has to do with the fact that the data that we collected rarely saw price movements. The API only exposed data aggregated at the level of the whole event; so we were able to access the max and min point at a few timepoints over a day. Because we only had a few weeks of data, the number of time series that exhibited meaningful price changes over the time horizon was very small. We think that more effective scraping (bypassing the API and getting ticket level data) will greatly improve performance.</p>
+        <p>Second, the regression method could trivially be extended to include polynomial regression (just need to add more features which will be the old features raised to some power).</p>
+        <p>One could also imagine a more complex linear model that is more suited to time series—in particular, our model does not take into account correlations between previous days prices. For example, we could try an autoregressive moving average model. Instead of regressing on the previous prices as is, we would take the weighted averages of the previous prices to smooth the signal.</p>
+        <p>With respect to the automated ticket algorithm, there are more statistics that would need to be calculated to better determine which tickets to buy/sell. Perhaps the most important is the probability of completing your sale at every price. Our current system just predicts which input features (previous prices and other variables) are predicted to give the greatest rise in price. However, it is not useful if we are unlikely to fulfill the transaction at this price.</p>
+    </section>
+    </div>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
+    <script src="http://araftery.s3.amazonaws.com/cs205/smooth_scroll.js"></script>
+    <script>
+        $('nav a').smoothScroll({offset: -60});
+    </script>
+
     <!-- Bootstrap Core JavaScript -->
     <script src="bootstrap/js/bootstrap.min.js"></script>
 
+    <!-- MathJax for LaTeX -->
+    <script type="text/javascript"
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 </body>
 
 </html>
