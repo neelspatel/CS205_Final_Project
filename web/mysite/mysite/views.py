@@ -21,6 +21,7 @@ home_dir = "/home/ubuntu/CS205_Final_Project/web/mysite/"
 
 import pyspark
 sc = pyspark.SparkContext(appName="final")
+sc.addPyFile("/home/ubuntu/CS205_Final_Project/web/mysite/mysite/views.py")
 
 # from GitHub
 def cholesky_solution_linear_regression(x_t_x,x_t_y):    
