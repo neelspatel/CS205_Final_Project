@@ -33,7 +33,7 @@ Our code is broken up into a few categories:
 
 ## How to Run
 To run our linear regression implementation on a random matrix:
-```
+```python
 import gen_random
 import linreg
 
