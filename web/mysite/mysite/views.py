@@ -12,12 +12,12 @@ import sys
 import findspark
 
 #options for server
-findspark.init("/home/ubuntu/spark")
-home_dir = "/home/ubuntu/CS205_Final_Project/web/mysite/"
+#findspark.init("/home/ubuntu/spark")
+#home_dir = "/home/ubuntu/CS205_Final_Project/web/mysite/"
 
 #options for local
-#home_dir = ""
-#findspark.init()
+home_dir = ""
+findspark.init()
 
 import pyspark
 sc = pyspark.SparkContext(appName="final")
@@ -89,7 +89,7 @@ def get_data(request):
 
 	#gets the top buys and sells	
 	top_buys = sorted(predict_buy, key=lambda x: x["change"], reverse=True)[:50]
-	top_sells = sorted(predict_buy, key=lambda x: x["change"])[:50]
+	top_sells = sorted(predict_sell, key=lambda x: x["change"])[:50]
 
 	#gets the (simulated) event names for the buys and sells
 	event_names = os.listdir(home_dir + "../../snapshots_by_event")

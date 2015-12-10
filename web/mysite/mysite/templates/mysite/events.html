@@ -19,6 +19,7 @@
 			  </div>
 			  <div class="panel-body">
 			  	<p><b>{{event.metadata.time}}</b></p>
+			  	<p>Predicted price change between now and event: <b>{{event.change|floatformat}}</b></p>	
 			    <p>Event {{event.row_index}}</p>			    
 			    <p>Venue: {{event.metadata.venue_name}}</p>
 			    <p>Location: {{event.metadata.eventLocation_facet_str}}, {{event.metadata.zip}}</p>
@@ -36,6 +37,7 @@
 			  </div>
 			  <div class="panel-body">
 			  	<p><b>{{event.metadata.time}}</b></p>
+			  	<p>Predicted price change between now and event: <b>{{event.change|floatformat}}</b></p>	
 			    <p>Event {{event.row_index}}</p>			    
 			    <p>Venue: {{event.metadata.venue_name}}</p>
 			    <p>Location: {{event.metadata.eventLocation_facet_str}}, {{event.metadata.zip}}</p>
