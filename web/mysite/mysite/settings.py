@@ -1,3 +1,6 @@
+import os
+os.environ.get("SPARK_HOME", "~/spark")
+
 # Django settings for mysite project.
 
 DEBUG = True
