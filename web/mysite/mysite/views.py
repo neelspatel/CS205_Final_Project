@@ -46,6 +46,7 @@ def get_coefficients(file_name="/home/ubuntu/CS205_Final_Project/web/mysitematri
 
 	data = sc.textFile(file_name)
 
+	'''
 	processed_data = data.flatMap(process_row)
 
 	result_rdd = processed_data.reduceByKey(reduce_rows)
@@ -59,6 +60,8 @@ def get_coefficients(file_name="/home/ubuntu/CS205_Final_Project/web/mysitematri
 	betas = cholesky_solution_linear_regression(x_t_x, x_t_y)
 
 	return betas
+	'''
+	return [0 for i in range(10)]
 
 def home(request):	
 	return render(request, "mysite/index.html")
