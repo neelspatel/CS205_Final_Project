@@ -25,7 +25,7 @@ def process_row(row):
 def reduce_rows(row1, row2):
 	return row1 + row2
 
-def get_coefficients(file_name="matrix.txt"):
+def get_coefficients(file_name="/home/ubuntu/CS205_Final_Project/web/mysitematrix.txt"):
 
 	data = sc.textFile(file_name)
 

@@ -18,16 +18,16 @@ def get_data(request):
 	cols = int(request.POST.get("columns"))	
 
 	#create a random matrix in the file
-	gen_random.gen_random_array(rows, cols, "matrix.txt")
+	gen_random.gen_random_array(rows, cols, "/home/ubuntu/CS205_Final_Project/web/mysite/matrix.txt")
 
 	#splits the matrix into training and test data
-	test_regression.split_file("matrix.txt", "matrix_train.txt", "matrix_test.txt")
+	test_regression.split_file("/home/ubuntu/CS205_Final_Project/web/mysite/matrix.txt", "/home/ubuntu/CS205_Final_Project/web/mysite/matrix_train.txt", "/home/ubuntu/CS205_Final_Project/web/mysite/matrix_test.txt")
 
 	start = time.time()
-	coefs = linreg.get_coefficients("matrix_train.txt")
+	coefs = linreg.get_coefficients("/home/ubuntu/CS205_Final_Project/web/mysite/matrix_train.txt")
 
 	#tests the coefs
-	predict_buy, predict_sell = test_regression.get_recommended_buys("matrix_test.txt", coefs)
+	predict_buy, predict_sell = test_regression.get_recommended_buys("/home/ubuntu/CS205_Final_Project/web/mysite/matrix_test.txt", coefs)
 	predict_buy_events = []
 	predict_sell_events = []
 
@@ -37,6 +37,7 @@ def get_data(request):
 	response = {}
 	response['time'] = elapsed
 
+	'''
 	#read random data for each of the rows	
 	files = os.listdir("../../snapshots_by_event")
 	files = ["../../snapshots_by_event/" + x for x in files if x[-4:]==".txt"]
@@ -70,6 +71,8 @@ def get_data(request):
 		parsed_time = datetime.datetime.strptime(cur_time, "%Y-%m-%dT%XZ")
 		formatted_time = parsed_time.strftime("%c")
 		x[1] = formatted_time
+
+	'''
 
 	#return HttpResponse(json.dumps(response), content_type="application/json")
 	return render(request, "mysite/events.html", response)
