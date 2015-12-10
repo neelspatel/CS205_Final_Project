@@ -31,19 +31,33 @@ def get_recommended_buys(input_file, coefs):
 				predict_buy.append(row)
 			elif predicted_value < value:
 				predict_sell.append(row)					
-
 	return predict_buy, predict_sell
+
+def test_parallel(rows, cols, num_threads):
+    """
+    returns time of linear regression using parallel choelsky 
+    """
+    gen_random.gen_random_array(rows, cols, "parallel_matrix.txt")
+    split_file("parallel_matrix.txt", "parallel_matrix_train.txt", "parallel_matrix_test.txt")
+    start = time.time()
+    coefs = linreg.parallel_get_coefficients(file_name="parallel_matrix_train.txt", num_threads=num_threads)
+    reg_time = time.time() - start
+    # return time in seconds of lin reg
+    return reg_time
 
 def test():
 	#create a random matrix in the file
-	gen_random.gen_random_array(1000000, 25, "matrix.txt")
-
+    gen_random.gen_random_array(1000000, 25, "matrix.txt")
 	#splits the matrix into training and test data
-	split_file("matrix.txt", "matrix_train.txt", "matrix_test.txt")
+    split_file("matrix.txt", "matrix_train.txt", "matrix_test.txt")
+    start = time.time()
+    coefs = linreg.get_coefficients("matrix_train.txt")
+    predict_buy, predict_sell = get_recommended_buys("matrix_test.txt", coefs)
+    print time.time() - start
 
-	start = time.time()
-	coefs = linreg.get_coefficients("matrix_train.txt")
+print "About to test parallel cholesky"
+rows, cols, num_threads = 10000, 2000, 4
+runtime = test_parallel(rows, cols, num_threads)
+print "Rows: ", rows, " Cols: ", cols, " Threads: ", num_threads
+print "Time: ", runtime
 
-	#tests the coefs
-	predict_buy, predict_sell = get_recommended_buys("matrix_test.txt", coefs)
-	print time.time() - start

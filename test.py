@@ -17,7 +17,6 @@ def test_time():
     results = np.linalg.lstsq(X[:-1, :], X[:-1, -1])
     print time.time() - start
 
-@cython.boundscheck(False)
 def test_cholesky(size, n_threads):
     X = np.random.rand(size + 1, size)
     x_t_x = np.cov(X.T)
@@ -32,8 +31,19 @@ def test_cholesky(size, n_threads):
     print "Theirs took: ", time.time() - start
     assert(np.allclose(x_t_x.T, real_ch_x))
 
+def test_cholesky2(size, n_threads):
+    X = np.random.rand(size + 1, size)
+    x_t_x = np.cov(X.T)
+    out_mat = np.zeros(x_t_x.shape)
+    print "Cholesky"
+    start = time.time()
+    cholesky.cholesky2(x_t_x, out_mat, n_threads)
+    print time.time() - start 
+    real_ch_x = np.linalg.cholesky(x_t_x_2)
+    assert(np.allclose(out_mat.T, real_ch_x))
+
 size = 1000
-num_threads = 3
+num_threads = 2
 print "1 thread"
 test_cholesky(size, 1) 
 print num_threads, " threads"
