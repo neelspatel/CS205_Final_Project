@@ -12,12 +12,12 @@ import sys
 import findspark
 
 #options for server
-#findspark.init("/home/ubuntu/spark")
-#home_dir = "/home/ubuntu/CS205_Final_Project/web/mysite/"
+findspark.init("/home/ubuntu/spark")
+home_dir = "/home/ubuntu/CS205_Final_Project/web/mysite/"
 
 #options for local
-home_dir = ""
-findspark.init()
+#home_dir = ""
+#findspark.init()
 
 import pyspark
 sc = pyspark.SparkContext(appName="final")
