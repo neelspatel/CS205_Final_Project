@@ -35,7 +35,7 @@ def get_recommended_buys(input_file, coefs):
 			cur_row = {}
 			cur_row["predicted_value"] = predicted_value
 			cur_row["current_value"] = value
-			cur_row["change"] = predicted_value - value
+			cur_row["change"] = abs(predicted_value - value)
 			cur_row["row_index"] = i
 
 			if predicted_value > value:

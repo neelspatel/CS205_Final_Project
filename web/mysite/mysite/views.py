@@ -89,7 +89,7 @@ def get_data(request):
 
 	#gets the top buys and sells	
 	top_buys = sorted(predict_buy, key=lambda x: x["change"], reverse=True)[:50]
-	top_sells = sorted(predict_sell, key=lambda x: x["change"])[:50]
+	top_sells = sorted(predict_sell, key=lambda x: x["change"], reverse=True)[:50]
 
 	#gets the (simulated) event names for the buys and sells
 	event_names = os.listdir(home_dir + "../../snapshots_by_event")

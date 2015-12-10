@@ -10,7 +10,7 @@
 
 <div class="row">
 	<div class="col-xs-6">
-		<h2>Buy Recommendations</h2>
+		<h2 style="text-align: center">Buy Recommendations</h2>
 
 		{%for event in buy_events%}
 			<div class="panel panel-success">
@@ -19,7 +19,7 @@
 			  </div>
 			  <div class="panel-body">
 			  	<p><b>{{event.metadata.time}}</b></p>
-			  	<p>Predicted price change between now and event: <b>{{event.change|floatformat:3}}</b></p>	
+			  	<p>Predicted price increase between now and event: <b>${{event.change|floatformat:2}}</b></p>	
 			    <p>Event {{event.row_index}}</p>			    
 			    <p>Venue: {{event.metadata.venue_name}}</p>
 			    <p>Location: {{event.metadata.eventLocation_facet_str}}, {{event.metadata.zip}}</p>
@@ -28,7 +28,7 @@
 		{%endfor%}
 	</div>
 	<div class="col-xs-6">
-		<h2>Sell Recommendations</h2>
+		<h2 style="text-align: center">Sell Recommendations</h2>
 
 		{%for event in sell_events%}
 			<div class="panel panel-danger">
@@ -37,7 +37,7 @@
 			  </div>
 			  <div class="panel-body">
 			  	<p><b>{{event.metadata.time}}</b></p>
-			  	<p>Predicted price change between now and event: <b>{{event.change|floatformat:3}}</b></p>	
+			  	<p>Predicted price decrease between now and event: <b>${{event.change|floatformat:2}}</b></p>	
 			    <p>Event {{event.row_index}}</p>			    
 			    <p>Venue: {{event.metadata.venue_name}}</p>
 			    <p>Location: {{event.metadata.eventLocation_facet_str}}, {{event.metadata.zip}}</p>
