@@ -1,6 +1,6 @@
 # Parallel Ticket Price Prediction
 This code parallelizes linear regression using Spark and OMP/Cython to predict ticket prices.
-By Neel Patel, Nithin Tumma, and Andrew Raftery.
+<br />By Neel Patel, Nithin Tumma, and Andrew Raftery.
 
 Check out a full description and interactive simulation at our [project website](http://52.22.40.64)!
 
