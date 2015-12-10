@@ -1,2 +1,0 @@
-9145082	2015-10-30T06:10:00Z	Z Mobile Test PDF Event	Fillmore San Francisco	California SF Bay Area|81	94115
-snapshot_11_27_2015_18_0.json	1448665200.0	0	0	0

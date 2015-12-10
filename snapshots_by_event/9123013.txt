@@ -1,3 +1,0 @@
-9123013	2015-11-12T01:30:00Z	Cher	Frank Erwin Events Center	Texas Austin / San Antonio|707	78701
-snapshot_11_25_2015_6_0.json	1448449200.0	0	0	0
-snapshot_11_27_2015_18_0.json	1448665200.0	0	0	0

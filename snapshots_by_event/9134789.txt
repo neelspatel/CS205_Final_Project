@@ -1,4 +1,0 @@
-9134789	2015-11-16T05:30:00Z	Mary Lambert	RIO Theatre	British Columbia Vancouver|5871	V5N1W1
-snapshot_11_16_2015_0_0.json	1447650000.0	0	0	0
-snapshot_11_17_2015_0_0.json	1447736400.0	0	0	0
-snapshot_11_18_2015_0_0.json	1447822800.0	0	0	0

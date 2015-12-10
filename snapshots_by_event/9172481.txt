@@ -6,3 +6,59 @@ snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
 snapshot_11_17_2015_18_0.json	1447801200.0	0	0	0
 snapshot_11_18_2015_0_0.json	1447822800.0	0	0	0
 snapshot_11_18_2015_12_0.json	1447866000.0	0	0	0
+9172481	2015-11-17T04:00:00Z	Rock of Ages	Rock of Ages Theatre at the Venetian Las Vegas	Nevada Las Vegas|689	89109
+snapshot_11_16_2015_0_0.json	1447650000.0	84.4	70	2
+snapshot_11_17_2015_0_0.json	1447736400.0	61	50	2
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_18_0.json	1447801200.0	0	0	0
+snapshot_11_18_2015_0_0.json	1447822800.0	0	0	0
+snapshot_11_18_2015_12_0.json	1447866000.0	0	0	0
+9172481	2015-11-17T04:00:00Z	Rock of Ages	Rock of Ages Theatre at the Venetian Las Vegas	Nevada Las Vegas|689	89109
+snapshot_11_16_2015_0_0.json	1447650000.0	84.4	70	2
+snapshot_11_17_2015_0_0.json	1447736400.0	61	50	2
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_18_0.json	1447801200.0	0	0	0
+snapshot_11_18_2015_0_0.json	1447822800.0	0	0	0
+snapshot_11_18_2015_12_0.json	1447866000.0	0	0	0
+9172481	2015-11-17T04:00:00Z	Rock of Ages	Rock of Ages Theatre at the Venetian Las Vegas	Nevada Las Vegas|689	89109
+snapshot_11_16_2015_0_0.json	1447650000.0	84.4	70	2
+snapshot_11_17_2015_0_0.json	1447736400.0	61	50	2
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_18_0.json	1447801200.0	0	0	0
+snapshot_11_18_2015_0_0.json	1447822800.0	0	0	0
+snapshot_11_18_2015_12_0.json	1447866000.0	0	0	0
+9172481	2015-11-17T04:00:00Z	Rock of Ages	Rock of Ages Theatre at the Venetian Las Vegas	Nevada Las Vegas|689	89109
+snapshot_11_16_2015_0_0.json	1447650000.0	84.4	70	2
+snapshot_11_17_2015_0_0.json	1447736400.0	61	50	2
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_18_0.json	1447801200.0	0	0	0
+snapshot_11_18_2015_0_0.json	1447822800.0	0	0	0
+snapshot_11_18_2015_12_0.json	1447866000.0	0	0	0
+9172481	2015-11-17T04:00:00Z	Rock of Ages	Rock of Ages Theatre at the Venetian Las Vegas	Nevada Las Vegas|689	89109
+snapshot_11_16_2015_0_0.json	1447650000.0	84.4	70	2
+snapshot_11_17_2015_0_0.json	1447736400.0	61	50	2
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_18_0.json	1447801200.0	0	0	0
+snapshot_11_18_2015_0_0.json	1447822800.0	0	0	0
+snapshot_11_18_2015_12_0.json	1447866000.0	0	0	0
+9172481	2015-11-17T04:00:00Z	Rock of Ages	Rock of Ages Theatre at the Venetian Las Vegas	Nevada Las Vegas|689	89109
+snapshot_11_16_2015_0_0.json	1447650000.0	84.4	70	2
+snapshot_11_17_2015_0_0.json	1447736400.0	61	50	2
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_18_0.json	1447801200.0	0	0	0
+snapshot_11_18_2015_0_0.json	1447822800.0	0	0	0
+snapshot_11_18_2015_12_0.json	1447866000.0	0	0	0
+9172481	2015-11-17T04:00:00Z	Rock of Ages	Rock of Ages Theatre at the Venetian Las Vegas	Nevada Las Vegas|689	89109
+snapshot_11_16_2015_0_0.json	1447650000.0	84.4	70	2
+snapshot_11_17_2015_0_0.json	1447736400.0	61	50	2
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_18_0.json	1447801200.0	0	0	0
+snapshot_11_18_2015_0_0.json	1447822800.0	0	0	0
+snapshot_11_18_2015_12_0.json	1447866000.0	0	0	0

@@ -1,0 +1,18 @@
+9264857	2015-11-17T01:00:00Z	Solid Soul featuring Mavis Staples and Joan Osborne	Fletcher Hall at The Carolina Theatre Durham	North Carolina Raleigh-Durham|685	27701
+snapshot_11_16_2015_0_0.json	1447650000.0	85	89	8
+snapshot_11_17_2015_0_0.json	1447736400.0	44.18	89	8
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_18_0.json	1447801200.0	0	0	0
+snapshot_11_17_2015_6_0.json	1447758000.0	0	0	0
+snapshot_11_18_2015_0_0.json	1447822800.0	0	0	0
+snapshot_11_18_2015_12_0.json	1447866000.0	0	0	0
+9264857	2015-11-17T01:00:00Z	Solid Soul featuring Mavis Staples and Joan Osborne	Fletcher Hall at The Carolina Theatre Durham	North Carolina Raleigh-Durham|685	27701
+snapshot_11_16_2015_0_0.json	1447650000.0	85	89	8
+snapshot_11_17_2015_0_0.json	1447736400.0	44.18	89	8
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
+snapshot_11_17_2015_18_0.json	1447801200.0	0	0	0
+snapshot_11_17_2015_6_0.json	1447758000.0	0	0	0
+snapshot_11_18_2015_0_0.json	1447822800.0	0	0	0
+snapshot_11_18_2015_12_0.json	1447866000.0	0	0	0

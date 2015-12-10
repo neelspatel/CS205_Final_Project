@@ -1,3 +1,0 @@
-9087548	2015-11-14T01:00:00Z	Avenue Q	Stage 3 at New World Stages	New York New York Metro|664	10019
-snapshot_11_16_2015_0_0.json	1447650000.0	0	0	0
-snapshot_11_17_2015_6_0.json	1447758000.0	0	0	0

@@ -1,8 +1,0 @@
-9168209	2015-11-01T00:00:00Z	Taylor Swift	Raymond James Stadium	Florida Tampa / St. Petersburg|404	33607
-snapshot_11_24_2015_0_0.json	1448341200.0	0	0	0
-snapshot_11_24_2015_12_0.json	1448384400.0	0	0	0
-snapshot_11_25_2015_18_0.json	1448492400.0	0	0	0
-snapshot_11_26_2015_0_0.json	1448514000.0	0	0	0
-snapshot_11_30_2015_0_0.json	1448859600.0	0	0	0
-snapshot_11_30_2015_12_0.json	1448902800.0	0	0	0
-snapshot_11_30_2015_6_0.json	1448881200.0	0	0	0

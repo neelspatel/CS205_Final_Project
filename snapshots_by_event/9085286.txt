@@ -1,6 +1,0 @@
-9085286	2015-11-16T01:00:00Z	Manowar	Concord Music Hall	Illinois Chicago|666	60647
-snapshot_11_16_2015_0_0.json	1447650000.0	0	0	0
-snapshot_11_17_2015_0_0.json	1447736400.0	0	0	0
-snapshot_11_17_2015_12_0.json	1447779600.0	0	0	0
-snapshot_11_17_2015_6_0.json	1447758000.0	0	0	0
-snapshot_11_27_2015_18_0.json	1448665200.0	0	0	0

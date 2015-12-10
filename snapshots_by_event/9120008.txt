@@ -1,5 +1,0 @@
-9120008	2015-11-14T19:01:00Z	PARKING PASSES ONLY Jackson State vs North Carolina State	PNC Arena Parking Lots	North Carolina Raleigh-Durham|685	27607
-snapshot_11_23_2015_18_0.json	1448319600.0	0	0	0
-snapshot_11_23_2015_18_0.json	1448319600.0	0	0	0
-snapshot_11_24_2015_0_0.json	1448341200.0	0	0	0
-snapshot_11_24_2015_12_0.json	1448384400.0	0	0	0

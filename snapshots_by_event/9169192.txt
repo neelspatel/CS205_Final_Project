@@ -1,3 +1,0 @@
-9169192	2015-10-28T00:31:00Z	PARKING PASSES ONLY Taylor Swift	American Airlines Arena Parking Lots	Florida Miami / S. Florida|669	33132
-snapshot_11_20_2015_0_0.json	1447995600.0	0	0	0
-snapshot_11_20_2015_12_0.json	1448038800.0	0	0	0
