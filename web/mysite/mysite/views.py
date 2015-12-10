@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 import test_regression
 import gen_random
-import linreg
+from linreg import get_coefficients
 import time
 import numpy as np
 import os
@@ -13,7 +13,7 @@ import sys
 home_dir = "/home/ubuntu/CS205_Final_Project/web/mysite/"
 #home_dir = ""
 
-sys.path.append('/home/ubuntu/CS205_Final_Project/web/mysite')
+#sys.path.append('/home/ubuntu/CS205_Final_Project/web/mysite')
 
 
 def home(request):	
@@ -30,7 +30,7 @@ def get_data(request):
 	test_regression.split_file(home_dir + "matrix.txt", home_dir + "matrix_train.txt", home_dir + "matrix_test.txt")
 
 	start = time.time()
-	coefs = linreg.get_coefficients(home_dir + "matrix_train.txt")
+	coefs = get_coefficients(home_dir + "matrix_train.txt")
 
 	#tests the coefs
 	predict_buy, predict_sell = test_regression.get_recommended_buys(home_dir + "matrix_test.txt", coefs)
