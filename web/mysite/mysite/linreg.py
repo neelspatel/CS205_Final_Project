@@ -2,7 +2,7 @@ import findspark
 findspark.init("/home/ubuntu/spark-1.0.0")
 import pyspark
 sc = pyspark.SparkContext(appName="final")
-sc.setLogLevel('ERROR')
+#sc.setLogLevel('ERROR')
 
 import numpy as np
 
