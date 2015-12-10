@@ -1,5 +1,8 @@
 import findspark
+
 findspark.init("/home/ubuntu/spark-1.0.0")
+#findspark.init()
+
 import pyspark
 sc = pyspark.SparkContext(appName="final")
 #sc.setLogLevel('ERROR')

@@ -9,6 +9,9 @@ import numpy as np
 import os
 import datetime
 
+home_dir = "/home/ubuntu/CS205_Final_Project/web/mysite/"
+#home_dir = ""
+
 
 def home(request):	
 	return render(request, "mysite/index.html")
@@ -18,16 +21,16 @@ def get_data(request):
 	cols = int(request.POST.get("columns"))	
 
 	#create a random matrix in the file
-	gen_random.gen_random_array(rows, cols, "/home/ubuntu/CS205_Final_Project/web/mysite/matrix.txt")
+	gen_random.gen_random_array(rows, cols, home_dir + "matrix.txt")
 
 	#splits the matrix into training and test data
-	test_regression.split_file("/home/ubuntu/CS205_Final_Project/web/mysite/matrix.txt", "/home/ubuntu/CS205_Final_Project/web/mysite/matrix_train.txt", "/home/ubuntu/CS205_Final_Project/web/mysite/matrix_test.txt")
+	test_regression.split_file(home_dir + "matrix.txt", home_dir + "matrix_train.txt", home_dir + "matrix_test.txt")
 
 	start = time.time()
-	coefs = linreg.get_coefficients("/home/ubuntu/CS205_Final_Project/web/mysite/matrix_train.txt")
+	coefs = linreg.get_coefficients(home_dir + "matrix_train.txt")
 
 	#tests the coefs
-	predict_buy, predict_sell = test_regression.get_recommended_buys("/home/ubuntu/CS205_Final_Project/web/mysite/matrix_test.txt", coefs)
+	predict_buy, predict_sell = test_regression.get_recommended_buys(home_dir + "matrix_test.txt", coefs)
 	predict_buy_events = []
 	predict_sell_events = []
 
