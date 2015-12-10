@@ -36,7 +36,7 @@ def get_recommended_buys(input_file, coefs):
 
 def test():
 	#create a random matrix in the file
-	gen_random.gen_random_array(1000000, 25, "matrix.txt")
+	gen_random.gen_random_array(100000, 25, "matrix.txt")
 
 	#splits the matrix into training and test data
 	split_file("matrix.txt", "matrix_train.txt", "matrix_test.txt")
@@ -45,5 +45,6 @@ def test():
 	coefs = linreg.get_coefficients("matrix_train.txt")
 
 	#tests the coefs
-	predict_buy, predict_sell = get_recommended_buys("matrix_test.txt", coefs)
-	print time.time() - start
+	predict_buy, predict_sell = get_recommended_buys("matrix_test.txt", coefs)	
+
+test()

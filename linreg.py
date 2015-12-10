@@ -6,6 +6,8 @@ sc.setLogLevel('ERROR')
 
 import numpy as np
 
+import time
+
 # from GitHub
 def cholesky_solution_linear_regression(x_t_x,x_t_y):    
     L = np.linalg.cholesky(x_t_x)    
@@ -29,6 +31,8 @@ def get_coefficients(file_name="matrix.txt"):
 
 	data = sc.textFile(file_name)
 
+	start = time.time()
+
 	processed_data = data.flatMap(process_row)
 
 	result_rdd = processed_data.reduceByKey(reduce_rows)
@@ -41,4 +45,8 @@ def get_coefficients(file_name="matrix.txt"):
 
 	betas = cholesky_solution_linear_regression(x_t_x, x_t_y)
 
+	print time.time() - start
+
 	return betas
+
+get_coefficients()
