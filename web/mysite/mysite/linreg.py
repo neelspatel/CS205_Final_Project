@@ -1,6 +1,6 @@
 import findspark
 
-findspark.init("/home/ubuntu/spark-1.0.0")
+findspark.init("/home/ubuntu/spark")
 #findspark.init()
 
 import pyspark
